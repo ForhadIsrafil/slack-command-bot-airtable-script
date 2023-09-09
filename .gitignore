@@ -118,7 +118,7 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
-
+slack_bot_2023/ngrok.exe
 # Environments
 .env
 .venv
