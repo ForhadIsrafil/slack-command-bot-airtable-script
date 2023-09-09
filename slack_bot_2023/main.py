@@ -35,7 +35,7 @@ def partybot_report(ack, say, command):
     print("latest UNIX timestamp:", latest_date_time)
     # oldest_date_time
     oldest_date_time = datetime.datetime(year=today_date_time.year, month=today_date_time.month,
-                                         day=today_date_time.day - today_date_time.day + 1, hour=1, minute=1, second=1)
+                                         day=today_date_time.day - today_date_time.day + 1, hour=0, minute=1, second=1)
     print("oldest UNIX timestamp:", time.mktime(oldest_date_time.timetuple()))
     # Filtering Datetime in Unix Timestamp end
 
