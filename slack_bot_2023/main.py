@@ -22,7 +22,7 @@ def mention_handler(body, say):
 @app.command("/get_emoji")
 def partybot_report(ack, say, command):
     ack()  # acknowledge command request
-    print(command)
+    # print(command)
     user_name = command['user_name']
     user_id = command['user_id']
     channel_id = command['channel_id']
@@ -45,22 +45,24 @@ def partybot_report(ack, say, command):
                                                 oldest=oldest_date_unix_time, limit=700)
     # print(messages)
     # ------------------------------------------------------------------------------------------
-    parated_reactions_count_dict = {}
-    for react in messages:
+    separated_reactions_count_dict = {}
+    for react in messages['messages']:
         try:
             # print(react['reactions'])
-            if react['reactions'][0]['name'] not in separated_reactions_count_dict:
-                separated_reactions_count_dict[react['reactions'][0]['name']] = 1
-
             if react['reactions'][0]['name'] in separated_reactions_count_dict:
                 separated_reactions_count_dict[react['reactions'][0]['name']] = separated_reactions_count_dict[
                                                                                     react['reactions'][0]['name']] + 1
+            if react['reactions'][0]['name'] not in separated_reactions_count_dict:
+                separated_reactions_count_dict[react['reactions'][0]['name']] = 1
+
         except Exception as e:
+            # print(e)
             pass
 
     print(separated_reactions_count_dict)
+    data_list = [f':{key}: {value}' for key, value in separated_reactions_count_dict.items()]
     # ------------------------------------------------------------------------------------------
-    say("hey")
+    say(" ".join(data_list))
 
 
 if __name__ == "__main__":
