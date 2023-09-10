@@ -60,7 +60,7 @@ def partybot_report(ack, say, command):
             pass
 
     print(separated_reactions_count_dict)
-    data_list = [f':{key}: {value}' for key, value in separated_reactions_count_dict.items()]
+    data_list = [f':{key}: {value}\n' for key, value in separated_reactions_count_dict.items()]
     # ------------------------------------------------------------------------------------------
     say(" ".join(data_list))
 
