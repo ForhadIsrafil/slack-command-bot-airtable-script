@@ -60,7 +60,9 @@ def partybot_report(ack, say, command):
             pass
 
     print(separated_reactions_count_dict)
-    data_list = [f':{key}: {value}\n' for key, value in separated_reactions_count_dict.items()]
+    leaderboard_score = dict(sorted(separated_reactions_count_dict.items(), key=lambda x: x[1], reverse=True))
+
+    data_list = [f':{key}: {value}\n' for key, value in leaderboard_score.items()]
     # ------------------------------------------------------------------------------------------
     say(" ".join(data_list))
 

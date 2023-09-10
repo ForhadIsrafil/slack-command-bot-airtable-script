@@ -31,10 +31,12 @@ import json
 # oldest_date_unix_time = time.mktime(oldest_date_time.timetuple())
 # print("oldest UNIX timestamp:", oldest_date_unix_time)
 
-data = {'eyes': 5, 'white_check_mark': 5}
+data = {'eyes': 56, 'white_check_mark': 8}
 
 data_list = [f':{key}: :{value}' for key, value in data.items()]
 # for key, value in data.items():
 #     print("".join(f'{key}: {value}', end=" "))
 
 print(" ".join(data_list))
+sorted_list = sorted(data.items(), key=lambda x: x[1], reverse=True)
+print(sorted_list)
