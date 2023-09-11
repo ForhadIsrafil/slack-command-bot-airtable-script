@@ -120,6 +120,7 @@ celerybeat.pid
 *.sage.py
 slack_bot_2023/ngrok.exe
 # Environments
+*.json
 .env
 .venv
 env/
