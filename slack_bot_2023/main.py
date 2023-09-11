@@ -13,12 +13,6 @@ SLACK_APP_TOKEN = os.environ["SLACK_APP_TOKEN"]
 app = App(token=SLACK_BOT_TOKEN)
 
 
-@app.event("app_mention")
-def mention_handler(body, say):
-    print("heelelel")
-    say('Hello World!')
-
-
 @app.command("/get_emoji")
 def partybot_report(ack, say, command):
     ack()  # acknowledge command request
@@ -47,26 +41,64 @@ def partybot_report(ack, say, command):
     # ------------------------------------------------------------------------------------------
     separated_reactions_count_dict = {}
     for react in messages['messages']:
+        # real_name = app.client.users_info(user=react['user'])['user']['real_name']
         try:
             # print(react['reactions'])
             if react['reactions'][0]['name'] in separated_reactions_count_dict:
-                separated_reactions_count_dict[react['reactions'][0]['name']] = separated_reactions_count_dict[
-                                                                                    react['reactions'][0]['name']] + 1
+                separated_reactions_count_dict[react['reactions'][0]['name']]['amount'] = \
+                    separated_reactions_count_dict[react['reactions'][0]['name']]['amount'] + 1
             if react['reactions'][0]['name'] not in separated_reactions_count_dict:
-                separated_reactions_count_dict[react['reactions'][0]['name']] = 1
+                separated_reactions_count_dict[react['reactions'][0]['name']] = {'amount': 1, 'user': react['user']}
 
         except Exception as e:
             # print(e)
             pass
 
     print(separated_reactions_count_dict)
-    leaderboard_score = dict(sorted(separated_reactions_count_dict.items(), key=lambda x: x[1], reverse=True))
-
-    data_list = [f':{key}: {value}\n' for key, value in leaderboard_score.items()]
+    leaderboard_score = dict(sorted(separated_reactions_count_dict.items(), key=lambda x: x[0][0], reverse=True))
+    # print(leaderboard_score)
+    # data_list = [f':{key}: {value}\n' for key, value in leaderboard_score.items()]
+    # print(data_list)
     # ------------------------------------------------------------------------------------------
-    say(" ".join(data_list))
+
+    blocks = generate_blocks(leaderboard_score)
+
+    # say(blocks=blocks, text=" ".join(data_list))
+    # say(blocks=blocks, text="The Leaderboard")
+    say(blocks=blocks, text="_")
+
+
+def generate_blocks(data):
+    blocks_obj = []
+    for key, value in data.items():
+        user_info = app.client.users_info(user=value['user'])
+        blocks_obj.append({"type": "divider"})
+        blocks_obj.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*Name: {user_info['user']['real_name']}  :{key}: Score: {value['amount']}*"
+            },
+            "accessory": {
+                "type": "image",
+                "image_url": f"{user_info['user']['profile']['image_72']}",
+                "alt_text": f"{value['user']}"
+            }
+        })
+        blocks_obj.append({"type": "divider"})
+
+    [{"type": "header", "text": {"type": "plain_text", "text": "The Leaderboard"}}] + blocks_obj
+    return blocks_obj
 
 
 if __name__ == "__main__":
     handler = SocketModeHandler(app, SLACK_APP_TOKEN)
     handler.start()
+
+{
+    "type": "header",
+    "text": {
+        "type": "plain_text",
+        "text": "The Leaderboard"
+    }
+}

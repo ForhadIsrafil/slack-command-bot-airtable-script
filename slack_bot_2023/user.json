@@ -1,0 +1,58 @@
+{
+  "ok": true,
+  "user": {
+    "id": "UTDCLSCBX",
+    "team_id": "TTFJ75X8W",
+    "name": "forhadtuhin5088",
+    "deleted": false,
+    "color": "9f69e7",
+    "real_name": "Forhad Israfil",
+    "tz": "Asia/Dhaka",
+    "tz_label": "Bangladesh Standard Time",
+    "tz_offset": 21600,
+    "profile": {
+      "title": "",
+      "phone": "01827363761",
+      "skype": "",
+      "real_name": "Forhad Israfil",
+      "real_name_normalized": "Forhad Israfil",
+      "display_name": "",
+      "display_name_normalized": "",
+      "fields": null,
+      "status_text": "Freelancing",
+      "status_emoji": ":speech_balloon:",
+      "status_emoji_display_info": [
+        {
+          "emoji_name": "speech_balloon",
+          "display_url": "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f4ac.png",
+          "unicode": "1f4ac"
+        }
+      ],
+      "status_expiration": 0,
+      "avatar_hash": "c937854f230d",
+      "image_original": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_original.png",
+      "is_custom_image": true,
+      "first_name": "Forhad",
+      "last_name": "Israfil",
+      "image_24": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_24.png",
+      "image_32": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_32.png",
+      "image_48": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_48.png",
+      "image_72": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_72.png",
+      "image_192": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_192.png",
+      "image_512": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_512.png",
+      "image_1024": "https://avatars.slack-edge.com/2023-09-09/5855994355223_c937854f230ddfb9830b_1024.png",
+      "status_text_canonical": "",
+      "team": "TTFJ75X8W"
+    },
+    "is_admin": true,
+    "is_owner": true,
+    "is_primary_owner": true,
+    "is_restricted": false,
+    "is_ultra_restricted": false,
+    "is_bot": false,
+    "is_app_user": false,
+    "updated": 1694201138,
+    "is_email_confirmed": true,
+    "who_can_share_contact_card": "EVERYONE"
+  }
+}
