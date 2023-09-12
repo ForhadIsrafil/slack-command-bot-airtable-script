@@ -78,16 +78,11 @@ def generate_blocks(data):
             "text": {
                 "type": "mrkdwn",
                 "text": f"*Name: {user_info['user']['real_name']}  :{key}: Score: {value['amount']}*"
-            },
-            "accessory": {
-                "type": "image",
-                "image_url": f"{user_info['user']['profile']['image_72']}",
-                "alt_text": f"{value['user']}"
             }
         })
         blocks_obj.append({"type": "divider"})
 
-    [{"type": "header", "text": {"type": "plain_text", "text": "The Leaderboard"}}] + blocks_obj
+    [{"type": "section", "text": {"type": "plain_text", "text": "*The Leaderboard*"}}] + blocks_obj
     return blocks_obj
 
 
