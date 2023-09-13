@@ -1,6 +1,22 @@
 import datetime
 import time
 import json
+import markdown
+
+d = {'eyes': {'amount': 4, 'user': 'UTDCLSCBX'}, 'white_check_mark': {'amount': 6, 'user': 'UTDCLSCBX'}}
+
+mrkstring = '''
+Rank  Name  Score
+'''
+
+for i, (key, value) in enumerate(d.items()):
+    print(i + 1, key, value)
+    mrkstring += f"{i + 1}     :{key}:{value['user']}  {value['amount']}\n\n"
+
+print(mrkstring)
+
+l = [11,22]
+print([33]+l)
 
 # separated_reactions_count_dict = {}
 # with open("json_data.json", 'r') as json_file:
@@ -31,14 +47,14 @@ import json
 # oldest_date_unix_time = time.mktime(oldest_date_time.timetuple())
 # print("oldest UNIX timestamp:", oldest_date_unix_time)
 
-data = {'eyes': 56, 'white_check_mark': 8}
-
-data_list = [f':{key}: :{value}' for key, value in data.items()]
-print(data_list)
-# for key, value in data.items():
-#     print("".join(f'{key}: {value}', end=" "))
-
-print(" ".join(data_list))
-sorted_list = sorted(data.items(), key=lambda x: x[1], reverse=True)
-print(sorted_list)
+# data = {'eyes': 56, 'white_check_mark': 8}
+#
+# data_list = [f':{key}: :{value}' for key, value in data.items()]
+# print(data_list)
+# # for key, value in data.items():
+# #     print("".join(f'{key}: {value}', end=" "))
+#
+# print(" ".join(data_list))
+# sorted_list = sorted(data.items(), key=lambda x: x[1], reverse=True)
+# print(sorted_list)
 

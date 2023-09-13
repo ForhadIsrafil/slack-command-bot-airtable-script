@@ -56,7 +56,7 @@ def partybot_report(ack, say, command):
 
     print(separated_reactions_count_dict)
     leaderboard_score = dict(sorted(separated_reactions_count_dict.items(), key=lambda x: x[0][0], reverse=True))
-    # print(leaderboard_score)
+    print(leaderboard_score)
     # data_list = [f':{key}: {value}\n' for key, value in leaderboard_score.items()]
     # print(data_list)
     # ------------------------------------------------------------------------------------------
@@ -69,21 +69,32 @@ def partybot_report(ack, say, command):
 
 
 def generate_blocks(data):
-    blocks_obj = []
-    for key, value in data.items():
+    medals = {1: ":first_place_medal:", 2: ":second_place_medal:", 3: ":third_place_medal:", 4: ":four:"}
+    mrkstring = '''
+    Rank      Name                             Score\n
+    
+    '''.strip()
+    for i, (key, value) in enumerate(data.items()):
         user_info = app.client.users_info(user=value['user'])
-        blocks_obj.append({"type": "divider"})
-        blocks_obj.append({
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": f"*Name: {user_info['user']['real_name']}  :{key}: Score: {value['amount']}*"
-            }
-        })
-        blocks_obj.append({"type": "divider"})
+        mrkstring += "\n"+str(i + 1) + " - " + medals[i + 1] + "    :" + key + ":  " + user_info['user'][
+            'real_name'] + "    -    " + str(
+            value['amount']) + "\n"
 
-    [{"type": "section", "text": {"type": "plain_text", "text": "*The Leaderboard*"}}] + blocks_obj
-    return blocks_obj
+    blocks_obj = []
+    # for key, value in data.items():
+    #     user_info = app.client.users_info(user=value['user'])
+    blocks_obj.append({
+        "type": "section",
+        "text": {
+            "type": "mrkdwn",
+            "text": mrkstring
+        }
+    })
+    blocks_obj.append({"type": "divider"})
+
+    new_blocks = [{"type": "header", "text": {"type": "plain_text", "text": ":trophy: The Leaderboard"}},
+                  {"type": "divider"}] + blocks_obj
+    return new_blocks
 
 
 if __name__ == "__main__":
@@ -94,6 +105,6 @@ if __name__ == "__main__":
     "type": "header",
     "text": {
         "type": "plain_text",
-        "text": "The Leaderboard"
+        "text": ":trophy: The Leaderboard"
     }
 }
