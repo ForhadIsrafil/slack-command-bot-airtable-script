@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import json
 import datetime
 import time
+import operator
 
 load_dotenv()
 SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
@@ -48,37 +49,37 @@ def partybot_report(ack, say, command):
                 separated_reactions_count_dict[react['reactions'][0]['name']]['amount'] = \
                     separated_reactions_count_dict[react['reactions'][0]['name']]['amount'] + 1
             if react['reactions'][0]['name'] not in separated_reactions_count_dict:
-                separated_reactions_count_dict[react['reactions'][0]['name']] = {'amount': 1, 'user': react['user']}
+                separated_reactions_count_dict[react['reactions'][0]['name']] = {'amount': 1, 'user': react['user'],
+                                                                                 "reaction": react['reactions'][0][
+                                                                                     'name']}
 
         except Exception as e:
             # print(e)
             pass
 
-    print(separated_reactions_count_dict)
-    leaderboard_score = dict(sorted(separated_reactions_count_dict.items(), key=lambda x: x[0][0], reverse=True))
+    # print(separated_reactions_count_dict)
+
+    # Get the amount of each emoji
+    amounts = separated_reactions_count_dict.values()
+
+    # Sort the dictionary by the value of the 'amount' key
+    leaderboard_score = sorted(amounts, key=operator.itemgetter('amount'), reverse=True)
     print(leaderboard_score)
-    # data_list = [f':{key}: {value}\n' for key, value in leaderboard_score.items()]
-    # print(data_list)
     # ------------------------------------------------------------------------------------------
 
     blocks = generate_blocks(leaderboard_score)
 
-    # say(blocks=blocks, text=" ".join(data_list))
-    # say(blocks=blocks, text="The Leaderboard")
     say(blocks=blocks, text="_")
 
 
 def generate_blocks(data):
-    medals = {1: ":first_place_medal:", 2: ":second_place_medal:", 3: ":third_place_medal:", 4: ":four:"}
     mrkstring = '''
     Rank      Name                             Score\n
-    
-    '''.strip()
-    for i, (key, value) in enumerate(data.items()):
-        user_info = app.client.users_info(user=value['user'])
-        mrkstring += "\n"+str(i + 1) + " - " + medals[i + 1] + "    :" + key + ":  " + user_info['user'][
-            'real_name'] + "    -    " + str(
-            value['amount']) + "\n"
+    '''
+    for i, score_data in enumerate(data):
+        user_info = app.client.users_info(user=score_data['user'])
+        mrkstring += "\n" + str(i + 1) + " - " + get_medals(i + 1) + "    :" + score_data['reaction'] + ":  " + \
+                     user_info['user']['real_name'] + "    -    " + str(score_data['amount']) + "\n"
 
     blocks_obj = []
     # for key, value in data.items():
@@ -87,7 +88,7 @@ def generate_blocks(data):
         "type": "section",
         "text": {
             "type": "mrkdwn",
-            "text": mrkstring
+            "text": mrkstring.lstrip()
         }
     })
     blocks_obj.append({"type": "divider"})
@@ -95,6 +96,14 @@ def generate_blocks(data):
     new_blocks = [{"type": "header", "text": {"type": "plain_text", "text": ":trophy: The Leaderboard"}},
                   {"type": "divider"}] + blocks_obj
     return new_blocks
+
+
+def get_medals(index):
+    medals = {1: ":first_place_medal:", 2: ":second_place_medal:", 3: ":third_place_medal:", 4: ":four:"}
+    try:
+        return medals[index]
+    except Exception as e:
+        return str(index)
 
 
 if __name__ == "__main__":

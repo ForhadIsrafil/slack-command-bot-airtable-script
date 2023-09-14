@@ -9,14 +9,22 @@ mrkstring = '''
 Rank  Name  Score
 '''
 
-for i, (key, value) in enumerate(d.items()):
-    print(i + 1, key, value)
-    mrkstring += f"{i + 1}     :{key}:{value['user']}  {value['amount']}\n\n"
+import operator
 
-print(mrkstring)
+# Create a dictionary
+dict = {'clap': {'amount': 2, 'user': 'UTDCLSCBX', 'reaction': 'clap'},
+        'raised_hands': {'amount': 2, 'user': 'UTDCLSCBX', 'reaction': 'raised_hands'},
+        'eyes': {'amount': 4, 'user': 'UTDCLSCBX', 'reaction': 'eyes'},
+        'white_check_mark': {'amount': 6, 'user': 'UTDCLSCBX', 'reaction': 'white_check_mark'}}
 
-l = [11,22]
-print([33]+l)
+# Get the amount of each emoji
+amounts = dict.values()
+
+# Sort the amounts in descending order
+sorted_amounts = sorted(amounts, key=operator.itemgetter('amount'), reverse=True)
+
+# Print the sorted amounts
+print(sorted_amounts)
 
 # separated_reactions_count_dict = {}
 # with open("json_data.json", 'r') as json_file:
@@ -57,4 +65,3 @@ print([33]+l)
 # print(" ".join(data_list))
 # sorted_list = sorted(data.items(), key=lambda x: x[1], reverse=True)
 # print(sorted_list)
-
